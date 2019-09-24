@@ -1,0 +1,19 @@
+{
+  "name": "myday4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "_mogodb@0.0.1-security@mogodb": "^0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mogodb": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "mongodb": "^3.3.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

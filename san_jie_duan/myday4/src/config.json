@@ -1,0 +1,6 @@
+{
+    "PORT": 2020,
+    "DBurl": "mongodb://127.0.0.1:27017",
+    "DBname": "1907",
+    "secret": "qinning"
+}
