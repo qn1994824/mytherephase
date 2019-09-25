@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>增删改查备忘录</title>
+		<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
+		<script src="assets/js/vue.js"></script>
+	</head>
+	<body>
+		<h1>增删改查备忘录</h1>
+		<div id="app" class="container-fluid">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="输入内容" v-model="keyword" ref="keyword" v-on:keyup.13="additem()">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button" v-on:click="additem()">添加</button>
+				</span>
+			</div>
+			<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>
+						<input type="checkbox" v-model="checkAll">
+						全选
+					</th>
+					<th>#</th>
+					<th>待办事项</th>
+					<th>预计完成时间</th>
+					<th>是否完成</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="(item,idx) in datalist" v-on:click="selectItem(idx)">
+					<td>
+						<input type="checkbox" v-model="item.selected">
+					</td>
+					<td>{{idx+1}}</td>
+					<td>{{item.content}}</td>
+					<td></td>
+					<td>{{item.done ? '是':'否'}}</td>
+					<td>
+						<div class="btn-group btn-group-xs" role="group" aria-label="...">
+							<input class="btn btn-default btn-success" type="submit" value="完成" v-on:click.stop="okitem(idx)">
+							<input class="btn btn-default btn-danger" type="submit" value="删除" v-on:click.stop="removeitem(idx)">
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+		<script>
+		let vm = new Vue({
+			el:"#app",
+			data:{
+				keyword:'',
+				datalist:[{
+						id:1,
+						content: '先定个小目标，赚他5个亿',
+						done: false,
+						date: '2019-12-25',
+						selected:false
+				}]
+			},
+			computed:{
+				checkAll:{
+					get(){
+						return this.datalist.every(item=>item.selected);
+					},
+					set(val){
+						this.datalist.forEach(item=>item.selected=val);
+					}
+				}
+			},
+			methods:{
+				additem(){
+					let data ={
+						id:this.datalist.length+1,
+						content:this.keyword,
+						done: false,
+						selected:false
+					}
+					this.datalist.unshift(data);
+					this.keyword="";
+					this.$refs.keyword.focus();
+				},
+				removeitem(idx){
+					this.datalist.splice(idx,1);
+				},
+				okitem(idx){
+					this.datalist.forEach((item,i)=>{
+						if(i==idx){
+							item.done= true;
+						}
+					})
+				},
+				selectItem(idx){
+					this.datalist.forEach((item,i)=>{
+						if(i==idx){
+							item.selected=!item.selected;
+						}
+					})
+				}
+			}
+		})
+	</script>
+	</body>
+</html>
